@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+
+<tasks xmlns="urn:wildfly:wildfly-feature-pack-tasks:2.0">
+    <copy-path src="docs/licenses/licenses.xsl" relative-to="content" target="docs/licenses/template-feature-pack-licenses.xsl"/>
+    <!-- TODO In 'src' and 'output' use the name you gave the licenses xml file -->
+    <transform stylesheet="docs/licenses/template-feature-pack-licenses.xsl" src="docs/licenses/template-feature-pack-licenses.xml" output="docs/licenses/template-feature-pack-licenses.html" feature-pack-properties="true"/>
+    <delete path="docs/licenses/template-feature-pack-licenses.xsl"/>
+</tasks>
