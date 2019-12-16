@@ -195,7 +195,7 @@ Next we want to install our layer. We do this by running:
 ``` 
 `org.wildfly.extras.galleon-feature-pack-template:template-galleon-pack:1.0.0.Alpha-SNAPSHOT`
 is the Maven GAV of the Galleon feature pack (i.e. what we have in 
-[`https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/pom.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/pom.xml)).
+[`galleon-pack/pom.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/pom.xml)).
 
 If you went with the trimmed server in the previous step, and you look at
 `wildfly/standalone/configuration/standalone.xml`, you should see that 
