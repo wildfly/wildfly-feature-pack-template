@@ -143,7 +143,24 @@ layers:
 * `jmx-remoting` - Needed by Arquillian 
 * `template-layer` - our custom layer which in turn pulls in `cdi`
 
+### Adding more dependencies
+If you want your layer to bring in more content, which is not a module, you would add it under the 
+['galleon-pack/src/main/resources/packages'](https://github.com/wildfly/wildfly-galleon-pack-template/tree/master/galleon-pack/src/main/resources/packages)
+directory. The name of the directory is what becomes the package name. You then reference the name of
+that package from the `<packages>` section of your `layer-spec.xml`.
 
+For modules, it depends on if you are adding a feature or not.
+
+As we have seen a feature in this context is a WildFly Extension which provides a subsystem which in turn has configuration.
+To provision these we use the `build-feature-pack` goal of the plugin which looks for the `wildfly-feature-pack-build.xml`
+where the extension module is added.  Modules depended on by the extension module 
+are pulled in too. If you have some additional modules to add, you can add those in the
+`registerAdditionalRuntimePackages()` method of ['TemplateSubsystemDefinition'](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/subsystem/src/main/java/org/wildfly/extension/galleon/pack/template/subsystem/TemplateSubsystemDefinition.java).
+
+If your addition is not a feature, we use the `build-user-feature-pack` goal of the plugin. This does not use  
+`wildfly-feature-pack-build.xml`, and since it does not define a subsystem there is no
+`TemplateSubsystemDefinition`. In this case we add the required modules to 
+the `<packages>` section of your `layer-spec.xml`.
 
 ## Adapting for your feature
 To adapt this for your own usage, you should of course rename things for your subsystem.
