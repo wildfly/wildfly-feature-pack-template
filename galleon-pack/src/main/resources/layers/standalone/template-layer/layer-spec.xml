@@ -25,8 +25,18 @@
 
     <feature-group name="template-subsystem"/>
 
+    <!--
+    We already bring in our extension/subsystem module in /galleon-pack/wildfly-feature-pack-build.xml since we are adding
+    a configurable feature. If the feature needs additional modules we should add those in
+    TemplateSubsystemDefinition.registerAdditionalRuntimePackages(). In some cases, e.g. if this layer brings in a
+    set of other layers, and the interaction of those needs some additional modules, we can add them here.
+
+    If we are not using a feature so that we don't have a /galleon-pack/wildfly-feature-pack-build.xml and thus
+    no TemplateSubsystemDefinition class, we would add modules here.
+
+    In all cases, if we need to add some content other than modules, we would add those as packages here.
     <packages>
-        <!-- TODO the name of the extension module containing your subsystem -->
-        <package name="org.wildfly.extension.template-subsystem"/>
+        <package name="my.additional.module"/>
     </packages>
+    -->
 </layer-spec>

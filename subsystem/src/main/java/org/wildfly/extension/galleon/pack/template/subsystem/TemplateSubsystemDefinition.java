@@ -31,6 +31,8 @@ import org.jboss.as.controller.OperationFailedException;
 import org.jboss.as.controller.PersistentResourceDefinition;
 import org.jboss.as.controller.SimpleResourceDefinition;
 import org.jboss.as.controller.capability.RuntimeCapability;
+import org.jboss.as.controller.registry.ManagementResourceRegistration;
+import org.jboss.as.controller.registry.RuntimePackageDependency;
 import org.jboss.as.server.AbstractDeploymentChainStep;
 import org.jboss.as.server.DeploymentProcessorTarget;
 import org.jboss.dmr.ModelNode;
@@ -64,6 +66,21 @@ public class TemplateSubsystemDefinition extends PersistentResourceDefinition {
     @Override
     public Collection<AttributeDefinition> getAttributes() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public void registerAdditionalRuntimePackages(ManagementResourceRegistration resourceRegistration) {
+        super.registerAdditionalRuntimePackages(resourceRegistration);
+        //TODO - If your feature-pack needs any other modules, you should add those here, and remove the line above
+        /*
+        resourceRegistration.registerAdditionalRuntimePackages(
+                // Required dependencies are always added
+                RuntimePackageDependency.required("my.required.module"),
+                // Optional and passive modules depend on the 'optional-packages' mode. See the Galleon
+                // documentation for more details as this is an advanced feature
+                RuntimePackageDependency.optional("my.optional.module"),
+                RuntimePackageDependency.passive("my.passive.module")
+        );*/
     }
 
     static class AddHandler extends AbstractBoottimeAddStepHandler {

@@ -71,33 +71,64 @@ directory. Both of these modules are brought in by the layer implemented by this
 
 The layer is defined in [`galleon-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml).
 As we are making a CDI `@Produces` method available we need CDI, so our layer has a dependency on
-the `cdi` layer. It brings in the `org.wildfly.extension.template-subsystem` package, which
-in this case means the `org.wildfly.extension.template-subsystem` module. Galleon is smart enough
-to look at the dependencies of this module to bring in modules it in turn depends on. 
-So in this case it will e.g. bring in the `org.wildfly.template-dependency` module (or 'package' in Galleon terminology)
-too. The layer also has a dependency on the `template-subsystem` feature group which is defined in
+the `cdi` layer.
+
+Our layer also has a dependency on the `template-subsystem` feature group which is defined in
 [`galleon-pack/src/main/resources/feature_groups/template-subsystem.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/src/main/resources/feature_groups/template-subsystem.xml)
-which contains our 'feature spec'.
-Note that the feature spec's name is of the format 
+which contains our `<feature spec="subsystem.template-subsystem"/>`.
+Note that the 'spec' value is of the format:
 ```
 subsystem.<subsystem-name>
 ```  
+In our case the name of the subsystem is `template-subsystem`, so the full name is `subsystem.template-subsystem`. 
+When provisioning the server this results in an operation to add the subsystem:
+```
+/subsystem=template-subsystem:add()
+``` 
+Our subsystem is empty, as it has no attributes or child resources. 
+
+As an example, __if__ the subsystem had an attribute called
+`test` which should be set to `10`, we would write its feature spec as 
+```
+<feature spec="subsystem.template-subsystem">
+    <param name="test" value="10"/>
+</feature
+```
+which would result in the following __not working__ (since our subsystem has no attributes) 
+subsystem add operation:
+```
+/subsystem=template-subsystem:add(test=10)
+``` 
+
+
 
 
 [`galleon-pack/wildfly-feature-pack-build.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/wildfly-feature-pack-build.xml)
-takes care of adding the subsystem to the configuration. It also configures the feature packs that we depend upon. Note
+takes care of adding the subsystem to the configuration under `<extensions>` near the end of the file
+where we add a dependency on the `org.wildfly.extension.template-subsystem` module we have defined for our subsystem.
+Galleon is smart enough to look at the dependencies of this module to bring in modules it in turn depends on. 
+So in this case it will e.g. bring in the `org.wildfly.template-dependency` module (or 'package' in Galleon terminology)
+too. 
+
+It also configures the feature packs that we depend upon. Note
 that we have a direct dependency on `org.wildfly:wildfly-galleon-pack`. This in turn has dependencies on 
 `org.wildfly:wildfly-servlet-galleon-pack` and `org.wildfly.core:wildfly-core-galleon-pack` which is why the first 
 is listed under `dependencies` and the others under `transitive`. For each feature pack we can configure further
-what we want to include.
+what we want to include. 
+
 [`galleon-pack/pom.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/pom.xml)
 has the `wildfly-galleon-maven-plugin` which creates the Galleon Feature Pack. Note that it uses
 the `build-feature-pack` goal which is needed to add a new subsystem along with the mentioned
 entry in `wildfly-feature-pack-build.xml`.
-(If you just want to make some additional modules 
-available you would use `build-user-feature-pack` and not use a `wildfly-feature-pack-build.xml`. 
+
+__Note regarding non-configurable feature additions:__
+_If you just want to make some additional modules 
+available in the server you would use the `build-user-feature-pack` instead, and not use a `wildfly-feature-pack-build.xml`. 
 [`wildfly-extras/wildfly-datasources-galleon-pack/`](https://github.com/wildfly-extras/wildfly-datasources-galleon-pack)
-contains an example of this simpler scenario.)
+contains an example of this simpler scenario. To bring in the module containing our functionality in this case you
+need to add it to the `packages` section of the `layer-spec.xml` instead. The name of the package in this case
+is the name of your module (i.e. `org.wildfly.extension.template-subsystem`). As before the `org.wildfly.template-dependency`
+will also be brought in since it is a dependency in the subsystem's `module.xml`._
 
 If adding licenses is important to you, they are set up in the following places:
 * [`galleon-pack/src/license/template-feature-pack-licenses.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/src/license/template-feature-pack-licenses.xml) - 
@@ -134,7 +165,24 @@ layers:
 * `jmx-remoting` - Needed by Arquillian 
 * `template-layer` - our custom layer which in turn pulls in `cdi`
 
+### Adding more dependencies
+If you want your layer to bring in more content, which is not a module, you would add it under the 
+['galleon-pack/src/main/resources/packages'](https://github.com/wildfly/wildfly-galleon-pack-template/tree/master/galleon-pack/src/main/resources/packages)
+directory. The name of the directory is what becomes the package name. You then reference the name of
+that package from the `<packages>` section of your `layer-spec.xml`.
 
+For modules, it depends on if you are adding a feature or not.
+
+As we have seen a feature in this context is a WildFly Extension which provides a subsystem which in turn has configuration.
+To provision these we use the `build-feature-pack` goal of the plugin which looks for the `wildfly-feature-pack-build.xml`
+where the extension module is added.  Modules depended on by the extension module 
+are pulled in too. If you have some additional modules to add, you can add those in the
+`registerAdditionalRuntimePackages()` method of ['TemplateSubsystemDefinition'](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/subsystem/src/main/java/org/wildfly/extension/galleon/pack/template/subsystem/TemplateSubsystemDefinition.java).
+
+If your addition is not a feature, we use the `build-user-feature-pack` goal of the plugin. This does not use  
+`wildfly-feature-pack-build.xml`, and since it does not define a subsystem there is no
+`TemplateSubsystemDefinition`. In this case we add the required modules to 
+the `<packages>` section of your `layer-spec.xml`.
 
 ## Adapting for your feature
 To adapt this for your own usage, you should of course rename things for your subsystem.
