@@ -71,11 +71,9 @@ directory. Both of these modules are brought in by the layer implemented by this
 
 The layer is defined in [`galleon-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml).
 As we are making a CDI `@Produces` method available we need CDI, so our layer has a dependency on
-the `cdi` layer. It brings in the `org.wildfly.extension.template-subsystem` package, which
-in this case means the `org.wildfly.extension.template-subsystem` module. Galleon is smart enough
-to look at the dependencies of this module to bring in modules it in turn depends on. 
-So in this case it will e.g. bring in the `org.wildfly.template-dependency` module (or 'package' in Galleon terminology)
-too. The layer also has a dependency on the `template-subsystem` feature group which is defined in
+the `cdi` layer.
+
+Our layer also has a dependency on the `template-subsystem` feature group which is defined in
 [`galleon-pack/src/main/resources/feature_groups/template-subsystem.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/src/main/resources/feature_groups/template-subsystem.xml)
 which contains our 'feature spec'.
 Note that the feature spec's name is of the format 
@@ -83,21 +81,32 @@ Note that the feature spec's name is of the format
 subsystem.<subsystem-name>
 ```  
 
-
 [`galleon-pack/wildfly-feature-pack-build.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/wildfly-feature-pack-build.xml)
-takes care of adding the subsystem to the configuration. It also configures the feature packs that we depend upon. Note
+takes care of adding the subsystem to the configuration under `<extensions>` near the end of the file
+where we add a dependency on the `org.wildfly.extension.template-subsystem` module we have defined for our subsystem.
+Galleon is smart enough to look at the dependencies of this module to bring in modules it in turn depends on. 
+So in this case it will e.g. bring in the `org.wildfly.template-dependency` module (or 'package' in Galleon terminology)
+too. 
+
+It also configures the feature packs that we depend upon. Note
 that we have a direct dependency on `org.wildfly:wildfly-galleon-pack`. This in turn has dependencies on 
 `org.wildfly:wildfly-servlet-galleon-pack` and `org.wildfly.core:wildfly-core-galleon-pack` which is why the first 
 is listed under `dependencies` and the others under `transitive`. For each feature pack we can configure further
-what we want to include.
+what we want to include. 
+
 [`galleon-pack/pom.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/pom.xml)
 has the `wildfly-galleon-maven-plugin` which creates the Galleon Feature Pack. Note that it uses
 the `build-feature-pack` goal which is needed to add a new subsystem along with the mentioned
 entry in `wildfly-feature-pack-build.xml`.
-(If you just want to make some additional modules 
-available you would use `build-user-feature-pack` and not use a `wildfly-feature-pack-build.xml`. 
+
+__Note regarding non-configurable feature additions:__
+_If you just want to make some additional modules 
+available in the server you would use the `build-user-feature-pack` instead, and not use a `wildfly-feature-pack-build.xml`. 
 [`wildfly-extras/wildfly-datasources-galleon-pack/`](https://github.com/wildfly-extras/wildfly-datasources-galleon-pack)
-contains an example of this simpler scenario.)
+contains an example of this simpler scenario. To bring in the module containing our functionality in this case you
+need to add it to the `packages` section of the `layer-spec.xml` instead. The name of the package in this case
+is the name of your module (i.e. `org.wildfly.extension.template-subsystem`). As before the `org.wildfly.template-dependency`
+will also be brought in since it is a dependency in the subsystem's `module.xml`._
 
 If adding licenses is important to you, they are set up in the following places:
 * [`galleon-pack/src/license/template-feature-pack-licenses.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/src/license/template-feature-pack-licenses.xml) - 

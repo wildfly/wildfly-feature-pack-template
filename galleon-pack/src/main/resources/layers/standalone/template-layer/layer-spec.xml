@@ -25,8 +25,13 @@
 
     <feature-group name="template-subsystem"/>
 
+    <!--
+    We already bring in our subsystem module in /galleon-pack/wildfly-feature-pack-build.xml. If that was not the
+    case (e.g. if we were not using a a feature), we would add it here.
+    Also, if some modules (or other packages) you have not defined are not a dependency of those modules, you
+    can add those here.
     <packages>
-        <!-- TODO the name of the extension module containing your subsystem -->
         <package name="org.wildfly.extension.template-subsystem"/>
     </packages>
+    -->
 </layer-spec>
