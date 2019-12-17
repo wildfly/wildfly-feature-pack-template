@@ -75,11 +75,33 @@ the `cdi` layer.
 
 Our layer also has a dependency on the `template-subsystem` feature group which is defined in
 [`galleon-pack/src/main/resources/feature_groups/template-subsystem.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/src/main/resources/feature_groups/template-subsystem.xml)
-which contains our 'feature spec'.
-Note that the feature spec's name is of the format 
+which contains our `<feature spec="subsystem.template-subsystem"/>`.
+Note that the 'spec' value is of the format:
 ```
 subsystem.<subsystem-name>
 ```  
+In our case the name of the subsystem is `template-subsystem`, so the full name is `subsystem.template-subsystem`. 
+When provisioning the server this results in an operation to add the subsystem:
+```
+/subsystem=template-subsystem:add()
+``` 
+Our subsystem is empty, as it has no attributes or child resources. 
+
+As an example, __if__ the subsystem had an attribute called
+`test` which should be set to `10`, we would write its feature spec as 
+```
+<feature spec="subsystem.template-subsystem">
+    <param name="test" value="10"/>
+</feature
+```
+which would result in the following __not working__ (since our subsystem has no attributes) 
+subsystem add operation:
+```
+/subsystem=template-subsystem:add(test=10)
+``` 
+
+
+
 
 [`galleon-pack/wildfly-feature-pack-build.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/galleon-pack/wildfly-feature-pack-build.xml)
 takes care of adding the subsystem to the configuration under `<extensions>` near the end of the file
