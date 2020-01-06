@@ -25,7 +25,8 @@ public class ExampleProducer {
     @ExampleQualifier
     public Message getWelcomeMessage() {
         int counter = COUNTER.getAndIncrement();
-        String msg = MESSAGES.get(counter);
+        int index = counter % 4;
+        String msg = MESSAGES.get(index);
         return new Message(msg);
     }
 }

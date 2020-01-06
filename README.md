@@ -138,8 +138,9 @@ license for each.
 For each license we use, we have a .txt file whose name is the license name in lower case.
    
 The [`build/pom.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/build/pom.xml)
-file uses the `provision` goal of the `galleon-maven-plugin` to provision a server. It lists
-the feature packs that our feature pack depends on (note that they are 'transitive').
+file uses the `provision` goal of the `galleon-maven-plugin` to provision a server. It essentially
+lists our feature pack and its direct dependency `org.wildfly:wildfly-galleon-pack`.
+
 In the `config` section of the plugin we select the layers we want to use. In this case
 we are selecting enough functionality for our sample, by selecting the following layers
 * `jaxrs` - this in turn depends on the `web-server` layer.
@@ -198,9 +199,9 @@ To do this we first provision  WildFly itself using Galleon CLI. This is an alte
 to the more common way of downloading and extracting the zip from the
 [WildFly downloads page](https://www.wildfly.org/downloads).
 
-You first need to [download Galleon](https://github.com/wildfly/galleon-plugins/releases)
+You first need to [download Galleon](https://github.com/wildfly/galleon/releases)
 and unzip it somewhere. In my case I just have it in my `~/Downloads` folder, and I am using 
-Galleon 4.2.1.
+Galleon 4.2.3.
 
 As we will see below there are two main ways to use Gallon CLI to provision servers. We can either
 run commands directly in Galleon CLI directly, or we can provide an XML file which contains all the
@@ -216,7 +217,7 @@ This consists of two steps.
 First we run the CLI to install the full WildFly server (the result will be the same as the downloaded
 zip):
 ```
-~/Downloads/galleon-4.2.1.Final/bin/galleon.sh install wildfly:current --dir=wildfly
+~/Downloads/galleon-4.2.3.Final/bin/galleon.sh install wildfly:current --dir=wildfly
 ```
 The `wildfly:current` above tells Galleon to provision the latest version of WildFly which
 at the time of writing is 18.0.1.Final. If you want to install a particular version of 
@@ -231,7 +232,7 @@ If you want to trim the base server that we install (similar to what we did in t
 example server build), you can specify which layers to install by passing in the `--layers`
 option. To install the same server as we used to run the example above, you can run:
 ```
-~/Downloads/galleon-4.2.1.Final/bin/galleon.sh install wildfly:current --dir=wildfly --layers=jaxrs,management
+~/Downloads/galleon-4.2.3.Final/bin/galleon.sh install wildfly:current --dir=wildfly --layers=jaxrs,management
 ```
 Note that we did not install our `template-layer` because this is unknown in the main
 WildFly feature pack. We will add it in the next step.
@@ -239,7 +240,7 @@ WildFly feature pack. We will add it in the next step.
 #### Install our layer
 Next we want to install our layer. We do this by running:
 ```
-~/Downloads/galleon-4.2.1.Final/bin/galleon.sh install org.wildfly.extras.galleon-feature-pack-template:template-galleon-pack:1.0.0.Alpha-SNAPSHOT --layers=template-layer --dir=wildfly
+~/Downloads/galleon-4.2.3.Final/bin/galleon.sh install org.wildfly.extras.galleon-feature-pack-template:template-galleon-pack:1.0.0.Alpha-SNAPSHOT --layers=template-layer --dir=wildfly
 ``` 
 `org.wildfly.extras.galleon-feature-pack-template:template-galleon-pack:1.0.0.Alpha-SNAPSHOT`
 is the Maven GAV of the Galleon feature pack (i.e. what we have in 
@@ -277,7 +278,7 @@ we could have used the same layers as in the previous section.
 
 To provision the server, you now simply run the following command:
 ```
-~/Downloads/galleon-4.2.1.Final/bin/galleon.sh provision /path/to/provision.xml --dir=wildfly
+~/Downloads/galleon-4.2.3.Final/bin/galleon.sh provision /path/to/provision.xml --dir=wildfly
 ``` 
 
 Now you can start the server and run the example as we saw in the previous section.

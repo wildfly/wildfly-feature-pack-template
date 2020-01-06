@@ -70,37 +70,18 @@
                             <offline>true</offline>
                             <feature-packs>
                                 <feature-pack>
-                                    <transitive>true</transitive>
-                                    <groupId>org.wildfly.core</groupId>
-                                    <artifactId>wildfly-core-galleon-pack</artifactId>
-                                    <version>${version.org.wildfly.core}</version>
-                                    <included-packages>
-                                        <name>docs.licenses</name>
-                                    </included-packages>
-                                </feature-pack>
-                                <feature-pack>
-                                    <transitive>true</transitive>
-                                    <groupId>org.wildfly</groupId>
-                                    <artifactId>wildfly-servlet-galleon-pack</artifactId>
-                                    <version>${version.org.wildfly}</version>
-                                    <included-packages>
-                                        <name>docs.licenses</name>
-                                    </included-packages>
-                                </feature-pack>
-                                <feature-pack>
-                                    <transitive>true</transitive>
                                     <groupId>org.wildfly</groupId>
                                     <artifactId>wildfly-galleon-pack</artifactId>
                                     <version>${version.org.wildfly}</version>
-                                    <included-packages>
-                                        <name>docs.licenses</name>
-                                    </included-packages>
+                                    <inherit-packages>false</inherit-packages>
+                                    <inherit-configs>false</inherit-configs>
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>${project.groupId}</groupId>
-                                    <!-- TODO Set the name of the maven artifact containing our feature pack -->
                                     <artifactId>template-galleon-pack</artifactId>
                                     <version>${project.version}</version>
+                                    <inherit-packages>false</inherit-packages>
+                                    <inherit-configs>false</inherit-configs>
                                 </feature-pack>
                             </feature-packs>
                             <configurations>
@@ -123,6 +104,7 @@
                             <plugin-options>
                                 <jboss-maven-dist/>
                                 <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
+                                <optional-packages>passive+</optional-packages>
                             </plugin-options>
                         </configuration>
                     </execution>

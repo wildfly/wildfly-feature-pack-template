@@ -26,14 +26,14 @@
         <default-configs inherit="false"/>
         <packages inherit="false">
             <!-- If docs/licenses is desired, uncomment this line -->
-            <!-- include name="docs.licenses"/ -->
+            <include name="docs.licenses"/>
         </packages>
     </feature-pack>
     <feature-pack location="org.wildfly.extras.galleon-feature-pack-template:template-galleon-pack:1.0.0.Alpha-SNAPSHOT">
         <default-configs inherit="false"/>
         <packages inherit="false">
             <!-- If docs/licenses is desired, uncomment this line -->
-            <!-- include name="docs.licenses.merge"/ -->
+            <include name="docs.licenses.merge"/>
         </packages>
     </feature-pack>
     <config model="standalone" name="standalone.xml">
