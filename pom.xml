@@ -45,7 +45,7 @@
             The value of version.org.wildfly.core from the WildFly version tag. E.g. for 18.0.1 it is
             found here: https://github.com/wildfly/wildfly/blob/18.0.1.Final/pom.xml#L410
         -->
-        <version.org.wildfly.core>11.0.0.Beta2</version.org.wildfly.core>
+        <version.org.wildfly.core>10.0.3.Final</version.org.wildfly.core>
         <!--
             The value of version.org.wildfly.common from the WildFly version tag. E.g. for 18.0.1 it is
             found here: https://github.com/wildfly/wildfly/blob/18.0.1.Final/pom.xml#L216
