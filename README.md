@@ -138,8 +138,8 @@ license for each.
 For each license we use, we have a .txt file whose name is the license name in lower case.
    
 The [`build/pom.xml`](https://github.com/wildfly/wildfly-galleon-pack-template/blob/master/build/pom.xml)
-file uses the `provision` goal of the `galleon-maven-plugin` to provision a server. It lists
-the feature packs that our feature pack depends on (note that they are 'transitive').
+file uses the `provision` goal of the `galleon-maven-plugin` to provision a server. It essentially
+lists our feature pack.
 In the `config` section of the plugin we select the layers we want to use. In this case
 we are selecting enough functionality for our sample, by selecting the following layers
 * `jaxrs` - this in turn depends on the `web-server` layer.
