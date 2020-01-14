@@ -21,6 +21,7 @@
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="template-layer">
     <dependencies>
         <layer name="cdi"/>
+        <layer name="transactions"/>
     </dependencies>
 
     <feature-group name="template-subsystem"/>
