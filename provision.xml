@@ -46,6 +46,6 @@
         </layers>
     </config>
     <options>
-
+        <option name="optional-packages" value="passive+"/>
     </options>
 </installation>
