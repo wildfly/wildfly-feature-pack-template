@@ -15,8 +15,9 @@ jobs:
     - name: Checkout wildfly master
       uses: actions/checkout@v2
       with:
-        repository: wildfy/wildfly
-        path: main
+        repository: wildfly/wildfly
+        path: wildfly-master
+        #         token: ${{ secrets.WILDFLY_PAT }} 
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository
