@@ -75,6 +75,8 @@
         <maven.repository.protocol>https</maven.repository.protocol>
         <!-- The full remote maven repo URL; can be overridden via -D for special use cases -->
         <maven.repository.url>${maven.repository.protocol}://repository.jboss.org/nexus/content/groups/public/</maven.repository.url>
+        <!-- https://access.redhat.com/maven-repository - this is needed for the picketlink dependency -->
+        <maven.redhat.repository.url>${maven.repository.protocol}://maven.repository.redhat.com/ga/</maven.redhat.repository.url>
 
         <!-- Name of the built server -->
         <server.name>wildfly-${version.org.wildfly}-template-${project.version}</server.name>
