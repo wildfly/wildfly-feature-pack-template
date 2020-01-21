@@ -109,6 +109,20 @@
             <url>${maven.repository.url}</url>
             <layout>default</layout>
         </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <id>jboss-enterprise-maven-repository</id>
+            <name>JBoss Enterprise Maven Repository</name>
+            <url>${maven.redhat.repository.url}</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
     <dependencyManagement>
         <dependencies>
