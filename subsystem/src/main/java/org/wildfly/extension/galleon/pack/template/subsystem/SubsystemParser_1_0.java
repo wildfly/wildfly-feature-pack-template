@@ -29,12 +29,8 @@ public class SubsystemParser_1_0 extends PersistentResourceXMLParser {
     // TODO Rename to something that makes sense and update the template-subsytem.xsd namespaces to match
     public static final String NAMESPACE = "urn:wildfly:template-subsystem:1.0";
 
-    private static final PersistentResourceXMLDescription xmlDescription;
-
-    static {
-        xmlDescription = builder(TemplateExtension.SUBSYSTEM_PATH, NAMESPACE)
-                .build();
-    }
+    private static final PersistentResourceXMLDescription xmlDescription = builder(TemplateExtension.SUBSYSTEM_PATH, NAMESPACE)
+            .build();
 
     @Override
     public PersistentResourceXMLDescription getParserDescription() {
