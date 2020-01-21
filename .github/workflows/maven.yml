@@ -16,4 +16,4 @@ jobs:
     - name: Maven Version
       run: mvn --version
     - name: Maven Install
-      run: mvn install
+      run: mvn -B install
