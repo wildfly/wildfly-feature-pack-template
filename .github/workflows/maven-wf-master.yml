@@ -1,4 +1,4 @@
-name: Java CI
+name: Java CI against WF SNAPSHOT
 
 on: [push, pull_request]
 
