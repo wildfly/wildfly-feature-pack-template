@@ -6,7 +6,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      # The wildfly and corresponding wildfly core versions used in WildFly master
+      WILDFLY_VERSION: 19.0.0.Beta2-SNAPSHOT
+      WILDFLY_CORE_VERSION: 11.0.0.Beta7
     steps:
     - name: Checkout feature pack
       uses: actions/checkout@v2
@@ -17,7 +20,6 @@ jobs:
       with:
         repository: wildfly/wildfly
         path: wildfly-master
-        #         token: ${{ secrets.WILDFLY_PAT }} 
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository
@@ -32,3 +34,9 @@ jobs:
       run: mvn --version
     - name: Current directory
       run: pwd ; ls -al
+    - name: Build WildFly master
+      run: mvn -B install -DskipTests
+      working-directory: wildfly-master
+    - name: Build
+      run: mvn -B install -Dversion.org.wildfly=${WILDFLY_VERSION} -Dversion.org.wildfly.core=${WILDFLY_CORE_VERSION}
+      working-directory: main
