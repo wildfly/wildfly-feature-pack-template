@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name Checkout feature pack
+    - name: Checkout feature pack
       uses: actions/checkout@v2
       with:
         path: main
-    - name Checkout wildfly master
+    - name: Checkout wildfly master
       uses: actions/checkout@v2
       with:
         repository: wildfy/wildfly
