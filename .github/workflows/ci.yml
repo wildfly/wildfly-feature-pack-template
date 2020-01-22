@@ -29,6 +29,17 @@ jobs:
       - name: Maven Install
         run: mvn -B install
 
+      - name: Zip Artifacts
+        run: zip -R artifacts.zip 'server.log' 'surefire-reports/*.txt' 'surefire-reports/*.xml'
+
+      - uses: actions/upload-artifact@v1
+        with:
+          # Expressions in the name don't seem to get resolved
+          #name: ci-artifacts-galleon-template-raw-{{job.container.id}}
+          name: ci-artifacts-galleon-template-raw
+          path: artifacts.zip
+
+
   wildfly-master:
     # This adjusts the build to use the versions from wildfly master
     name: Against WildFly master
@@ -128,3 +139,14 @@ jobs:
             exit 1
           fi
         working-directory: main
+
+      - name: Zip Artifacts
+        run: zip -R artifacts.zip 'server.log' 'surefire-reports/*.txt' 'surefire-reports/*.xml'
+        working-directory: main
+
+      - uses: actions/upload-artifact@v1
+        with:
+          # Expressions in the name don't seem to get resolved
+          #name: ci-artifacts-galleon-template-wf-master-{{job.container.id}}
+          name: ci-artifacts-galleon-template-wf-master
+          path: main/artifacts.zip
