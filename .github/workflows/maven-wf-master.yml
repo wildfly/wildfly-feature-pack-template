@@ -1,15 +1,12 @@
 name: Java CI against WF SNAPSHOT
+# Tests the feature pack against WildFly master, and checks that the provisioned modules have the
+# expected versions
 
 on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    env:
-      # The wildfly and corresponding wildfly core versions used in WildFly master
-      WILDFLY_VERSION: 19.0.0.Beta2-SNAPSHOT
-      WILDFLY_CORE_VERSION: 11.0.0.Beta7
     steps:
     - name: Checkout feature pack
       uses: actions/checkout@v2
@@ -32,11 +29,60 @@ jobs:
         java-version: 1.8
     - name: Maven Version
       run: mvn --version
-    - name: Current directory
-      run: pwd ; ls -al
+    - name: Initialise Feature Pack version
+      # Needed to download everything from Maven to not pollute the output in the next steps
+      run: 
+        mvn help:evaluate -Dexpression=project.version -pl .
+      working-directory: main
+    - name: Set FEATURE_PACK_VERSION
+      run: |
+        TMP="$(mvn help:evaluate -Dexpression=project.version -pl . | grep -v '^\[')"
+        echo "::set-env name=FEATURE_PACK_VERSION::${TMP}" ;
+        echo "TMP ${TMP}"
+      working-directory: main      
+    - name: Initialise WildFly versions
+      # Needed to download everything from Maven to not pollute the output in the next steps
+      run: |
+        mvn -B help:evaluate -Dexpression=project.version -pl .
+        mvn -B help:evaluate -Dexpression=version.org.wildfly.core -pl .
+      working-directory: wildfly-master      
+    - name: Set WILDFLY_VERSION
+      run: |
+        TMP="$(mvn help:evaluate -Dexpression=project.version -pl . | grep -v '^\[')"
+        echo "::set-env name=WILDFLY_VERSION::${TMP}"
+      working-directory: wildfly-master
+    - name: Set WILDFLY_CORE_VERSION
+      run: |
+        TMP="$(mvn help:evaluate -Dexpression=version.org.wildfly.core -pl . | grep -v '^\[')"
+        echo "::set-env name=WILDFLY_CORE_VERSION::${TMP}"
+      working-directory: wildfly-master
+    - name: Show read versions
+      run: |
+        echo "Feature pack version ${FEATURE_PACK_VERSION}"
+        echo "WildFly version ${WILDFLY_VERSION}"
+        echo "WildFly Core version ${WILDFLY_CORE_VERSION}"
     - name: Build WildFly master
       run: mvn -B install -DskipTests
       working-directory: wildfly-master
     - name: Build
       run: mvn -B install -Dversion.org.wildfly=${WILDFLY_VERSION} -Dversion.org.wildfly.core=${WILDFLY_CORE_VERSION}
+      working-directory: main
+    - name: Calculate directories to check
+      run: |
+        SRV_DIR="build/target/wildfly-${WILDFLY_VERSION}-template-${FEATURE_PACK_VERSION}"
+        echo "::set-env name=BUILD_SERVER_DIR::${SRV_DIR}"
+        MODULES_BASE="${SRV_DIR}/modules/system/layers/base"
+        echo "::set-env name=UNDERTOW_MODULE_XML::${MODULES_BASE}/org/wildfly/extension/undertow/main/module.xml"
+        echo "::set-env name=CONTROLLER_MODULE_XML::${MODULES_BASE}/org/jboss/as/controller/main/module.xml"
+    - name: Check versions
+      run: | 
+        if grep -q org.wildfly:wildfly-undertow:${WILDFLY_VERSION} "${UNDERTOW_MODULE_XML}" && grep -q org.wildfly.core:wildfly-controller:${WILDFLY_CORE_VERSION} "${CONTROLLER_MODULE_XML}"; then
+          echo "Versions in module.xml files as expected!"
+        else
+          echo "Versions in module.xml files not as expected!"
+          "Expected WildFly version '${WILDFLY_VERSION}' and Core version '${WILDFLY_CORE_VERSION}'"
+          echo "Showing contents of ${UNDERTOW_MODULE_XML} and ${CONTROLLER_MODULE_XML}"
+          echo "Exiting..."
+          exit 1
+        fi
       working-directory: main
