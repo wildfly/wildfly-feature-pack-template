@@ -23,11 +23,10 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Maven Version
-        run: mvn --version
-
-      - name: Maven Install
-        run: mvn -B install
+      - name: Build and Test
+        run: |
+          mvn --version
+          mvn -B install
 
       - name: Zip Artifacts
         run: zip -R artifacts.zip 'server.log' 'surefire-reports/*.txt' 'surefire-reports/*.xml'
@@ -69,9 +68,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-
-      - name: Maven Version
-        run: mvn --version
 
       - name: Initialise Feature Pack version
         # Needed to download everything from Maven to not pollute the output in the next steps
@@ -115,8 +111,10 @@ jobs:
         run: mvn -B install -DskipTests
         working-directory: wildfly-master
 
-      - name: Build
-        run: mvn -B install -Dversion.org.wildfly=${WILDFLY_VERSION} -Dversion.org.wildfly.core=${WILDFLY_CORE_VERSION}
+      - name: Build and Test
+        run: |
+          mvn --version
+          mvn -B install -Dversion.org.wildfly=${WILDFLY_VERSION} -Dversion.org.wildfly.core=${WILDFLY_CORE_VERSION}
         working-directory: main
 
       - name: Calculate directories to check
