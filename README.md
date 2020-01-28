@@ -1,3 +1,5 @@
+![Galleon Pack Template Java CI](https://github.com/wildfly/wildfly-galleon-pack-template/workflows/Galleon%20Pack%20Template%20Java%20CI/badge.svg)
+
 # Wildfly Galleon Feature Pack Template
 A template Galleon feature pack to provision a new subsystem into WildFly using Galleon. 
 It is runnable as-is, and provides a very basic subsystem which supplies a CDI `@Produces` method. 
