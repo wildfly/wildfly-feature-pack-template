@@ -65,7 +65,7 @@
                 <version>${version.org.wildfly.galleon-plugins}</version>
                 <executions>
                     <execution>
-                        <id>wildfly-datassources-galleon-pack-build</id>
+                        <id>wildfly-template-galleon-pack-build</id>
                         <goals>
                             <goal>build-feature-pack</goal>
                         </goals>
