@@ -10,6 +10,10 @@ We will start off by showing you how to run the example, and dig more into the d
 feature pack is structured so that you can adapt it to provide your functionality as a Galleon
 feature pack.
 
+The master branch targets the current wildfly version under development. When WildFly is released there
+is a tag for the relevant WildFly version:
+* [WildFly 18](https://github.com/wildfly/wildfly-galleon-pack-template/tree/wildfly-18)
+
 
 ## Building the Galleon feature pack
 

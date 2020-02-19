@@ -40,15 +40,15 @@
         <!--
             Target WildFly version, and other parts needed for the Galleon maven plugin
         -->
-        <version.org.wildfly>18.0.1.Final</version.org.wildfly>
+        <version.org.wildfly>19.0.0.Beta2</version.org.wildfly>
         <!--
-            The value of version.org.wildfly.core from the WildFly version tag. E.g. for 18.0.1 it is
-            found here: https://github.com/wildfly/wildfly/blob/18.0.1.Final/pom.xml#L410
+            The value of version.org.wildfly.core from the WildFly version tag. E.g. for 19.0.0.Beta2 it is
+            found here: https://github.com/wildfly/wildfly/blob/19.0.0.Beta2/pom.xml#L438
         -->
-        <version.org.wildfly.core>10.0.3.Final</version.org.wildfly.core>
+        <version.org.wildfly.core>11.0.0.Beta8</version.org.wildfly.core>
         <!--
-            The value of version.org.wildfly.common from the WildFly version tag. E.g. for 18.0.1 it is
-            found here: https://github.com/wildfly/wildfly/blob/18.0.1.Final/pom.xml#L216
+            The value of version.org.wildfly.common from the WildFly Core version tag. E.g. for 11.0.0.Beta8 it is
+            found here: https://github.com/wildfly/wildfly-core/blob/11.0.0.Beta8/pom.xml#L215
         -->
         <version.org.wildfly.common>1.5.1.Final</version.org.wildfly.common>
 
