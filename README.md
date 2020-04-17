@@ -29,11 +29,11 @@ Galleon CLI to provision a server from the command line later on.
 ## Running the example application
 
 The example application lives in the 
-[`example/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/example)
+[`example/`](example)
 directory. It is a trivial application exposing a 
-[REST endpoint](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/example/src/main/java/org/wildfly/extension/galleon/pack/template/example/JaxRsResource.java) 
+[REST endpoint](example/src/main/java/org/wildfly/extension/feature/pack/template/example/JaxRsResource.java) 
 which is injected with an instance of the bean we have a `@Produces` for in the subsystem's dependency 
-[`dependency/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/dependency)
+[`dependency/`](dependency)
 folder. 
 The `@ExampleQualifier` Qualifier is also defined in the `dependency/` folder. 
 
@@ -41,7 +41,6 @@ Start the server by running
 ```
 ./build/target/wildfly-<WildFly Version>-template-<Template Version>/bin/standalone.sh
 ```
-from the `build/` directory.
  
 In another terminal window run:
 ```
@@ -54,7 +53,7 @@ language each time you refresh the page.
 
 ## Project structure
 
-The [root POM](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/pom.xml) contains the
+The [root POM](pom.xml) contains the
 WildFly versions we wrote this template Galleon feature pack for at the top of the `<properties>` section. 
 However, newer versions of WildFly are generally backwards compatible (unless you really dug into some server
 internals) so you can install it into a later version of WildFly. 
@@ -64,23 +63,23 @@ subsystem called `template-subsystem`. This subsystem is implemented in the
 `org.wildfly.extension.template-subsystem` module which in turn has a dependency
 on the `org.wildfly.template-dependency` module. The latter module basically
 makes a CDI `@Produces` available. The code for these modules are in the
-[`subsystem/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/subsystem)
-and [`dependency/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/dependency)
+[`subsystem/`](subsystem)
+and [`dependency/`](dependency)
 Maven sub-modules, and the subsystem's 
-[`DependencyProcessor`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/subsystem/src/main/java/org/wildfly/extension/galleon/pack/template/subsystem/deployment/DependencyProcessor.java)
+[`DependencyProcessor`](subsystem/src/main/java/org/wildfly/extension/feature/pack/template/subsystem/deployment/DependencyProcessor.java)
 makes the `org.wildfly.template-dependency` module available to the deployment. 
 
-The [`feature-pack/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/feature-pack)
+The [`feature-pack/`](feature-pack)
 Maven sub-module defines the Galleon feature pack. 
-It defines the JBoss modules for the subsystem and dependency under the [`feature-pack/src/main/resources/modules/system/layers/base`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/feature-pack/src/main/resources/modules/system/layers/base)
+It defines the JBoss modules for the subsystem and dependency under the [`feature-pack/src/main/resources/modules/system/layers/base`](feature-pack/src/main/resources/modules/system/layers/base)
 directory. Both of these modules are brought in by the layer implemented by this Galleon Feature Pack.
 
-The layer is defined in [`feature-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/feature-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml).
+The layer is defined in [`feature-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml`](feature-pack/src/main/resources/layers/standalone/template-layer/layer-spec.xml).
 As we are making a CDI `@Produces` method available we need CDI, so our layer has a dependency on
 the `cdi` layer.
 
 Our layer also has a dependency on the `template-subsystem` feature group which is defined in
-[`feature-pack/src/main/resources/feature_groups/template-subsystem.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/feature-pack/src/main/resources/feature_groups/template-subsystem.xml)
+[`feature-pack/src/main/resources/feature_groups/template-subsystem.xml`](feature-pack/src/main/resources/feature_groups/template-subsystem.xml)
 which contains our `<feature spec="subsystem.template-subsystem"/>`.
 Note that the 'spec' value is of the format:
 ```
@@ -109,7 +108,7 @@ subsystem add operation:
 
 
 
-[`feature-pack/wildfly-feature-pack-build.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/feature-pack/wildfly-feature-pack-build.xml)
+[`feature-pack/wildfly-feature-pack-build.xml`](feature-pack/wildfly-feature-pack-build.xml)
 takes care of adding the subsystem to the configuration under `<extensions>` near the end of the file
 where we add a dependency on the `org.wildfly.extension.template-subsystem` module we have defined for our subsystem.
 Galleon is smart enough to look at the dependencies of this module to bring in modules it in turn depends on. 
@@ -117,12 +116,12 @@ So in this case it will e.g. bring in the `org.wildfly.template-dependency` modu
 too. 
 
 It also configures the feature packs that we depend upon. Note
-that we have a direct dependency on `org.wildfly:wildfly-feature-pack`. This in turn has dependencies on 
-`org.wildfly:wildfly-servlet-feature-pack` and `org.wildfly.core:wildfly-core-feature-pack` which is why the first 
+that we have a direct dependency on `org.wildfly:wildfly-galleon-pack`. This in turn has dependencies on 
+`org.wildfly:wildfly-servlet-galleon-pack`, `org.wildfly:wildfly-ee-galleon-pack` and `org.wildfly.core:wildfly-core-galleon-pack` which is why the first 
 is listed under `dependencies` and the others under `transitive`. For each feature pack we can configure further
 what we want to include. 
 
-[`feature-pack/pom.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/feature-pack/pom.xml)
+[`feature-pack/pom.xml`](feature-pack/pom.xml)
 has the `wildfly-galleon-maven-plugin` which creates the Galleon Feature Pack. Note that it uses
 the `build-feature-pack` goal which is needed to add a new subsystem along with the mentioned
 entry in `wildfly-feature-pack-build.xml`.
@@ -137,13 +136,13 @@ is the name of your module (i.e. `org.wildfly.extension.template-subsystem`). As
 will also be brought in since it is a dependency in the subsystem's `module.xml`._
 
 If adding licenses is important to you, they are set up in the following places:
-* [`feature-pack/src/license/template-feature-pack-licenses.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/feature-pack/src/license/template-feature-pack-licenses.xml) - 
+* [`feature-pack/src/license/template-feature-pack-licenses.xml`](feature-pack/src/license/template-feature-pack-licenses.xml) - 
 This file lists the dependencies that are installed by the feature pack, and lists the
 license for each.
-* [`feature-pack/src/main/resources/content/docs/licenses/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/feature-pack/src/main/resources/content/docs/licenses) -
+* [`feature-pack/src/main/resources/content/docs/licenses/`](feature-pack/src/main/resources/content/docs/licenses) -
 For each license we use, we have a .txt file whose name is the license name in lower case.
    
-The [`build/pom.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/build/pom.xml)
+The [`build/pom.xml`](build/pom.xml)
 file uses the `provision` goal of the `galleon-maven-plugin` to provision a server. It essentially
 lists our feature pack and its direct dependency `org.wildfly:wildfly-feature-pack`.
 
@@ -154,17 +153,17 @@ we are selecting enough functionality for our sample, by selecting the following
 `mvn wildfly:deploy` can deploy the sample application via the management interfaces.
 * `template-layer` - our custom layer which in turn pulls in `cdi`
 
-The [`testsuite/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/testsuite) 
+The [`testsuite/`](testsuite) 
 folder is the root of a hierarchy of Maven modules to run the testsuite against a patched
 WildFly server. This root module takes some of the `plumbing` from the main
 WildFly testsuite.
 
-It's child module [`testsuite/integration/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/testsuite/integration)
+It's child module [`testsuite/integration/`](testsuite/integration)
 sets up some of the common dependencies for all tests, and allows you to have one or more
 child modules.
 
-In this case we have one child module: [`testsuite/integration/subsystem/`](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/testsuite/integration/subsystem).
-Its [`pom`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/testsuite/integration/subsystem/pom.xml)
+In this case we have one child module: [`testsuite/integration/subsystem/`](testsuite/integration/subsystem).
+Its [`pom`](testsuite/integration/subsystem/pom.xml)
 uses the the `provision` goal of the `galleon-maven-plugin` to provision a server as above, although in
 this case we are not using the `jaxrs` layer since the test does not use JAX-RS. Instead we use the following
 layers:
@@ -174,7 +173,7 @@ layers:
 
 ### Adding more dependencies
 If you want your layer to bring in more content, which is not a module, you would add it under the 
-['feature-pack/src/main/resources/packages'](https://github.com/wildfly/wildfly-feature-pack-template/tree/master/galleon-pack/src/main/resources/packages)
+[`feature-pack/src/main/resources/packages`](feature-pack/src/main/resources/packages)
 directory. The name of the directory is what becomes the package name. You then reference the name of
 that package from the `<packages>` section of your `layer-spec.xml`.
 
@@ -184,7 +183,7 @@ As we have seen a feature in this context is a WildFly Extension which provides 
 To provision these we use the `build-feature-pack` goal of the plugin which looks for the `wildfly-feature-pack-build.xml`
 where the extension module is added.  Modules depended on by the extension module 
 are pulled in too. If you have some additional modules to add, you can add those in the
-`registerAdditionalRuntimePackages()` method of ['TemplateSubsystemDefinition'](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/subsystem/src/main/java/org/wildfly/extension/galleon/pack/template/subsystem/TemplateSubsystemDefinition.java).
+`registerAdditionalRuntimePackages()` method of [`TemplateSubsystemDefinition`](subsystem/src/main/java/org/wildfly/extension/feature/pack/template/subsystem/TemplateSubsystemDefinition.java).
 
 If your addition is not a feature, we use the `build-user-feature-pack` goal of the plugin. This does not use  
 `wildfly-feature-pack-build.xml`, and since it does not define a subsystem there is no
@@ -207,7 +206,7 @@ to the more common way of downloading and extracting the zip from the
 
 You first need to [download Galleon](https://github.com/wildfly/galleon/releases)
 and unzip it somewhere. In my case I just have it in my `~/Downloads` folder, and I am using 
-Galleon 4.2.3.
+Galleon 4.2.5.
 
 As we will see below there are two main ways to use Gallon CLI to provision servers. We can either
 run commands directly in Galleon CLI directly, or we can provide an XML file which contains all the
@@ -223,13 +222,12 @@ This consists of two steps.
 First we run the CLI to install the full WildFly server (the result will be the same as the downloaded
 zip):
 ```
-~/Downloads/galleon-4.2.3.Final/bin/galleon.sh install wildfly:current --dir=wildfly
+~/Downloads/galleon-4.2.5.Final/bin/galleon.sh install wildfly:current --dir=wildfly
 ```
 The `wildfly:current` above tells Galleon to provision the latest version of WildFly which
-at the time of writing is 18.0.1.Final. If you want to install a particular version of 
+at the time of writing is 19.0.0.Final. If you want to install a particular version of 
 WildFly, you can append the version, e.g:
-* `wildfly:current#18.0.0.Final` - installs WildFly 18.0.0.Final
-* `wildfly:current#19.0.0.Beta1-SNAPSHOT` - installs WildFly from locally build maven artifacts 
+* `wildfly:current#20.0.0.Beta1-SNAPSHOT` - installs WildFly from locally build maven artifacts 
 
 `--dir` specifies the directory to install the server into. In this case I am using 
 a relative directory called `wildfly`.
@@ -238,7 +236,7 @@ If you want to trim the base server that we install (similar to what we did in t
 example server build), you can specify which layers to install by passing in the `--layers`
 option. To install the same server as we used to run the example above, you can run:
 ```
-~/Downloads/galleon-4.2.3.Final/bin/galleon.sh install wildfly:current --dir=wildfly --layers=jaxrs,management
+~/Downloads/galleon-4.2.5.Final/bin/galleon.sh install wildfly:current --dir=wildfly --layers=jaxrs,management
 ```
 Note that we did not install our `template-layer` because this is unknown in the main
 WildFly feature pack. We will add it in the next step.
@@ -246,11 +244,11 @@ WildFly feature pack. We will add it in the next step.
 #### Install our layer
 Next we want to install our layer. We do this by running:
 ```
-~/Downloads/galleon-4.2.3.Final/bin/galleon.sh install org.wildfly.extras.wildfly-feature-pack-template:template-feature-pack:1.0.0.Alpha-SNAPSHOT --layers=template-layer --dir=wildfly
+~/Downloads/galleon-4.2.5.Final/bin/galleon.sh install org.wildfly.extras.wildfly-feature-pack-template:template-feature-pack:1.0.0.Alpha-SNAPSHOT --layers=template-layer --dir=wildfly
 ``` 
 `org.wildfly.extras.wildfly-feature-pack-template:template-feature-pack:1.0.0.Alpha-SNAPSHOT`
 is the Maven GAV of the Galleon feature pack (i.e. what we have in 
-[`galleon-pack/pom.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/galleon-pack/pom.xml)).
+[`feature-pack/pom.xml`](feature-pack/pom.xml)).
 
 If you went with the trimmed server in the previous step, and you look at
 `wildfly/standalone/configuration/standalone.xml`, you should see that 
@@ -272,7 +270,7 @@ and then go to http://localhost:8080/example/greeting as before.
 
 An alternative to having to type all those CLI commands every time you want to provision a server is
 to use an XML file as input to the Galleon CLI. There is an example in 
-[`provision.xml`](https://github.com/wildfly/wildfly-feature-pack-template/blob/master/provision.xml)
+[`provision.xml`](provision.xml)
 
 As you can see, it lists the feature pack(s) we depend on, and our feature pack.
 For each of those we specify the GAV, as in the previous section. We can
@@ -284,7 +282,7 @@ we could have used the same layers as in the previous section.
 
 To provision the server, you now simply run the following command:
 ```
-~/Downloads/galleon-4.2.3.Final/bin/galleon.sh provision /path/to/provision.xml --dir=wildfly
+~/Downloads/galleon-4.2.5.Final/bin/galleon.sh provision /path/to/provision.xml --dir=wildfly
 ``` 
 
 Now you can start the server and run the example as we saw in the previous section.
@@ -297,11 +295,12 @@ There is a list of all our layers defined by WildFly and WildFly Core in our
 
 However, if you want to understand better what their dependencies are, you can look at the 
 layer-spec.xml for the various layers in the following locations:
-* WildFly Core's [Core Feature Pack](https://github.com/wildfly/wildfly-core/tree/10.0.3.Final/core-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [Servlet Feature Pack](https://github.com/wildfly/wildfly/tree/18.0.1.Final/servlet-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [Full Feature Pack](https://github.com/wildfly/wildfly/tree/18.0.1.Final/galleon-pack/src/main/resources/layers/standalone)
+* WildFly Core's [Core Feature Pack](https://github.com/wildfly/wildfly-core/tree/11.0.0.Final/core-galleon-pack/src/main/resources/layers/standalone)
+* WildFly's [Servlet Feature Pack](https://github.com/wildfly/wildfly/tree/19.0.0.Final/servlet-galleon-pack/src/main/resources/layers/standalone)
+* WildFly's [EE Feature Pack](https://github.com/wildfly/wildfly/tree/19.0.0.Final/ee-galleon-pack/src/main/resources/layers/standalone)
+* WildFly's [Full Feature Pack](https://github.com/wildfly/wildfly/tree/19.0.0.Final/galleon-pack/src/main/resources/layers/standalone)
 
-Note that the above links takes you to the versions used for WildFly 18.0.1.Final. If you
+Note that the above links takes you to the versions used for WildFly 19.0.0.Final. If you
 are interested in another/newer WildFly version, adjust the tag name in the URL.
 
 ## Debugging failures
@@ -309,5 +308,5 @@ To debug failures in the provisioning of the server of the creation of the Galle
 good to run `mvn install -X` which will provide more logging.
 
 If the above doesn't shed any light on your problems, it can also be good to look at the 
-`galleon-pack/target/layout/org.wildfly.extras.wildfly-feature-pack-template/template-feature-pack/<version>/`
+`feature-pack/target/layout/org.wildfly.extras.wildfly-feature-pack-template/template-feature-pack/<version>/`
 directory to see if everything you expected there.
