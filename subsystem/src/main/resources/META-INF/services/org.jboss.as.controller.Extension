@@ -15,4 +15,4 @@
 #
 
 # TODO This should match the fully qualified name of the renamed TemplateExtension class
-org.wildfly.extension.galleon.pack.template.subsystem.TemplateExtension
+org.wildfly.extension.feature.pack.template.subsystem.TemplateExtension

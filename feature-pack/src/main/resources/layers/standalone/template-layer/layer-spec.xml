@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2019 Red Hat, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!--
+    TODO Replace 'template-layer' in both 'name' and the name of the directory
+    with the name of your layer
+-->
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="template-layer">
+    <dependencies>
+        <layer name="cdi"/>
+    </dependencies>
+
+    <feature-group name="template-subsystem"/>
+
+    <!--
+    We already bring in our extension/subsystem module in /feature-pack/wildfly-feature-pack-build.xml since we are adding
+    a configurable feature. If the feature needs additional modules we should add those in
+    TemplateSubsystemDefinition.registerAdditionalRuntimePackages(). In some cases, e.g. if this layer brings in a
+    set of other layers, and the interaction of those needs some additional modules, we can add them here.
+
+    If we are not using a feature so that we don't have a /feature-pack/wildfly-feature-pack-build.xml and thus
+    no TemplateSubsystemDefinition class, we would add modules here.
+
+    In all cases, if we need to add some content other than modules, we would add those as packages here.
+    <packages>
+        <package name="my.additional.module"/>
+    </packages>
+    -->
+</layer-spec>

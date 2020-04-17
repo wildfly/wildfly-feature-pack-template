@@ -21,7 +21,7 @@
         <artifactId>jboss-parent</artifactId>
         <version>35</version>
     </parent>
-    <groupId>org.wildfly.extras.galleon-feature-pack-template</groupId>
+    <groupId>org.wildfly.extras.wildfly-feature-pack-template</groupId>
     <artifactId>template-parent</artifactId>
     <version>1.0.0.Alpha-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -169,7 +169,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>template-galleon-pack</artifactId>
+                <artifactId>template-feature-pack</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <exclusions>
@@ -181,7 +181,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>template-galleon-pack</artifactId>
+                <artifactId>template-feature-pack</artifactId>
                 <version>${project.version}</version>
                 <type>zip</type>
                 <exclusions>
@@ -299,7 +299,7 @@
         <module>build</module>
         <module>dependency</module>
         <module>example</module>
-        <module>galleon-pack</module>
+        <module>feature-pack</module>
         <module>subsystem</module>
         <module>testsuite</module>
     </modules>
