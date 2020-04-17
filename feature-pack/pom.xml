@@ -20,12 +20,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>template-parent</artifactId>
-        <groupId>org.wildfly.extras.galleon-feature-pack-template</groupId>
+        <groupId>org.wildfly.extras.wildfly-feature-pack-template</groupId>
         <version>1.0.0.Alpha-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>template-galleon-pack</artifactId>
+    <artifactId>template-feature-pack</artifactId>
     <packaging>pom</packaging>
 
     <name>WildFly Galleon FP Template - Galleon Pack</name>
@@ -65,7 +65,7 @@
                 <version>${version.org.wildfly.galleon-plugins}</version>
                 <executions>
                     <execution>
-                        <id>wildfly-template-galleon-pack-build</id>
+                        <id>wildfly-template-feature-pack-build</id>
                         <goals>
                             <goal>build-feature-pack</goal>
                         </goals>

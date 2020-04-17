@@ -20,7 +20,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>template-parent</artifactId>
-        <groupId>org.wildfly.extras.galleon-feature-pack-template</groupId>
+        <groupId>org.wildfly.extras.wildfly-feature-pack-template</groupId>
         <version>1.0.0.Alpha-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -33,13 +33,13 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>template-galleon-pack</artifactId>
+            <artifactId>template-feature-pack</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>template-galleon-pack</artifactId>
+            <artifactId>template-feature-pack</artifactId>
             <type>zip</type>
             <exclusions>
                 <exclusion>
@@ -78,7 +78,7 @@
                                 </feature-pack>
                                 <feature-pack>
                                     <groupId>${project.groupId}</groupId>
-                                    <artifactId>template-galleon-pack</artifactId>
+                                    <artifactId>template-feature-pack</artifactId>
                                     <version>${project.version}</version>
                                     <inherit-packages>false</inherit-packages>
                                     <inherit-configs>false</inherit-configs>

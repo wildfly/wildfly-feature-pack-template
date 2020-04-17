@@ -14,29 +14,21 @@
   ~ limitations under the License.
   -->
 <!-- TODO Rename this module to something matching your chosen subsystem name -->
-<module xmlns="urn:jboss:module:1.9" name="org.wildfly.extension.template-subsystem">
+<module xmlns="urn:jboss:module:1.9" name="org.wildfly.template-dependency">
     <properties>
         <property name="jboss.api" value="private"/>
     </properties>
 
     <resources>
         <!-- TODO Use the actual name of the subsystem artifact here -->
-        <artifact name="${org.wildfly.extras.galleon-feature-pack-template:template-subsystem}"/>
+        <artifact name="${org.wildfly.extras.wildfly-feature-pack-template:template-dependency}"/>
     </resources>
 
     <dependencies>
-        <!-- Typical module dependencies for a subsystem -->
-        <module name="org.jboss.as.controller"/>
-        <module name="org.jboss.as.server"/>
-        <module name="org.jboss.logging"/>
-        <module name="org.jboss.modules"/>
-        <module name="org.jboss.staxmapper"/>
-        <module name="org.wildfly.security.manager"/>
-
-        <!--
-            Additional module dependencies. If they contain any classes that should be exposed to the user's code,
-            (e.g. in a deployment) make sure you add them in the subsystem's DependencyProcessor too
-        -->
-        <module name="org.wildfly.template-dependency"/>
+        <!-- We need these dependencies to trigger weld/CDI -->
+        <module name="javax.enterprise.api"/>
+        <module name="org.jboss.weld.api"/>
+        <module name="org.jboss.weld.core"/>
+        <module name="org.jboss.weld.spi"/>
     </dependencies>
 </module>
