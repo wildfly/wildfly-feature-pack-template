@@ -13,7 +13,7 @@ feature pack.
 The master branch targets the current wildfly version under development. When WildFly is released there
 is a tag for the relevant WildFly version:
 * [WildFly 18](https://github.com/wildfly/wildfly-galleon-pack-template/tree/wildfly-18)
-
+* [WildFly 19](https://github.com/wildfly/wildfly-galleon-pack-template/tree/wildfly-19)
 
 ## Building the Galleon feature pack
 
