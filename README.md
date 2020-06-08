@@ -14,6 +14,7 @@ The master branch targets the current wildfly version under development. When Wi
 is a tag for the relevant WildFly version:
 * [WildFly 18](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-18)
 * [WildFly 19](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-19)
+* [WildFly 20](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-20)
 
 ## Building the Galleon feature pack
 
@@ -225,9 +226,9 @@ zip):
 ~/Downloads/galleon-4.2.5.Final/bin/galleon.sh install wildfly:current --dir=wildfly
 ```
 The `wildfly:current` above tells Galleon to provision the latest version of WildFly which
-at the time of writing is 19.0.0.Final. If you want to install a particular version of 
+at the time of writing is 20.0.0.Final. If you want to install a particular version of 
 WildFly, you can append the version, e.g:
-* `wildfly:current#20.0.0.Beta1-SNAPSHOT` - installs WildFly from locally build maven artifacts 
+* `wildfly:current#21.0.0.Beta1-SNAPSHOT` - installs WildFly from locally build maven artifacts 
 
 `--dir` specifies the directory to install the server into. In this case I am using 
 a relative directory called `wildfly`.
@@ -295,12 +296,12 @@ There is a list of all our layers defined by WildFly and WildFly Core in our
 
 However, if you want to understand better what their dependencies are, you can look at the 
 layer-spec.xml for the various layers in the following locations:
-* WildFly Core's [Core Feature Pack](https://github.com/wildfly/wildfly-core/tree/11.0.0.Final/core-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [Servlet Feature Pack](https://github.com/wildfly/wildfly/tree/19.0.0.Final/servlet-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [EE Feature Pack](https://github.com/wildfly/wildfly/tree/19.0.0.Final/ee-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [Full Feature Pack](https://github.com/wildfly/wildfly/tree/19.0.0.Final/galleon-pack/src/main/resources/layers/standalone)
+* WildFly Core's [Core Feature Pack](https://github.com/wildfly/wildfly-core/tree/12.0.1.Final/core-galleon-pack/src/main/resources/layers/standalone)
+* WildFly's [Servlet Feature Pack](https://github.com/wildfly/wildfly/tree/20.0.0.Final/servlet-galleon-pack/src/main/resources/layers/standalone)
+* WildFly's [EE Feature Pack](https://github.com/wildfly/wildfly/tree/20.0.0.Final/ee-galleon-pack/src/main/resources/layers/standalone)
+* WildFly's [Full Feature Pack](https://github.com/wildfly/wildfly/tree/20.0.0.Final/galleon-pack/src/main/resources/layers/standalone)
 
-Note that the above links takes you to the versions used for WildFly 19.0.0.Final. If you
+Note that the above links takes you to the versions used for WildFly 20.0.0.Final. If you
 are interested in another/newer WildFly version, adjust the tag name in the URL.
 
 ## Debugging failures
