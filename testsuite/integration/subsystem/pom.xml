@@ -78,6 +78,7 @@
                             </plugin-options>
                             <feature-packs>
                                 <feature-pack>
+                                    <transitive>true</transitive>
                                     <groupId>org.wildfly</groupId>
                                     <artifactId>wildfly-galleon-pack</artifactId>
                                     <version>${version.org.wildfly}</version>

@@ -19,24 +19,10 @@ If you want to use a Galleon 'universe' (see the Galleon documentation) you coul
 -->
 <build xmlns="urn:wildfly:feature-pack-build:3.1" producer="org.wildfly.extras.wildfly-feature-pack-template:template-feature-pack">
     <transitive>
-        <dependency group-id="org.wildfly.core" artifact-id="wildfly-core-galleon-pack">
-            <name>org.wildfly.core:wildfly-core-galleon-pack</name>
-            <packages inherit="false">
-                <exclude name="product.conf"/>
-            </packages>
-            <default-configs inherit="false"/>
-        </dependency>
-        <dependency group-id="org.wildfly" artifact-id="wildfly-servlet-galleon-pack">
-            <name>org.wildfly:wildfly-servlet-galleon-pack</name>
-            <packages inherit="false">
-                <exclude name="product.conf"/>
-            </packages>
-            <default-configs inherit="false"/>
-        </dependency>
         <dependency group-id="org.wildfly" artifact-id="wildfly-ee-galleon-pack">
             <name>org.wildfly:wildfly-ee-galleon-pack</name>
             <packages inherit="false">
-                <include name="docs.examples"/>
+                <exclude name="product.conf"/>
             </packages>
             <default-configs inherit="false"/>
         </dependency>

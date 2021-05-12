@@ -51,9 +51,17 @@ public class DependencyProcessor implements DeploymentUnitProcessor {
         // This is needed if running with a security manager, and seems to be needed by arquillian in all cases
         moduleSpecification.addSystemDependency(new ModuleDependency(moduleLoader, "org.wildfly.security.manager", false, false, true, false));
         // TODO use the name of the modules after renaming, and add any other dependencies
-        // In this case we don't need any classes from the subsystem module itseld so we don't need to add it to the
+        // In this case we don't need any classes from the subsystem module itself so we don't need to add it to the
         // deployment's module dependencies
         // moduleSpecification.addSystemDependency(new ModuleDependency(moduleLoader, "org.wildfly.extension.template-subsystem", false, false, true, false));
-        moduleSpecification.addSystemDependency(new ModuleDependency(moduleLoader, "org.wildfly.template-dependency", false, false, true, false));
+        moduleSpecification.addSystemDependency(
+                cdiDependency(new ModuleDependency(moduleLoader, "org.wildfly.template-dependency", false, false, true, false)));
+    }
+
+
+    private ModuleDependency cdiDependency(ModuleDependency moduleDependency) {
+        // This is needed following https://issues.redhat.com/browse/WFLY-13641 / https://github.com/wildfly/wildfly/pull/13406
+        moduleDependency.addImportFilter(s -> s.equals("META-INF"), true);
+        return moduleDependency;
     }
 }
