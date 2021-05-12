@@ -78,7 +78,7 @@ jobs:
       - name: Set FEATURE_PACK_VERSION
         run: |
           TMP="$(mvn help:evaluate -Dexpression=project.version -pl . | grep -v '^\[')"
-          echo "::set-env name=FEATURE_PACK_VERSION::${TMP}" ;
+          echo "FEATURE_PACK_VERSION=${TMP}" >> $GITHUB_ENV
           echo "TMP ${TMP}"
         working-directory: main
 
@@ -92,13 +92,13 @@ jobs:
       - name: Set WILDFLY_VERSION
         run: |
           TMP="$(mvn help:evaluate -Dexpression=project.version -pl . | grep -v '^\[')"
-          echo "::set-env name=WILDFLY_VERSION::${TMP}"
+          echo "WILDFLY_VERSION=${TMP}" >> $GITHUB_ENV
         working-directory: wildfly-master
 
       - name: Set WILDFLY_CORE_VERSION
         run: |
           TMP="$(mvn help:evaluate -Dexpression=version.org.wildfly.core -pl . | grep -v '^\[')"
-          echo "::set-env name=WILDFLY_CORE_VERSION::${TMP}"
+          echo "WILDFLY_CORE_VERSION=${TMP}" >> $GITHUB_ENV
         working-directory: wildfly-master
 
       - name: Show read versions
@@ -120,10 +120,10 @@ jobs:
       - name: Calculate directories to check
         run: |
           SRV_DIR="build/target/wildfly-${WILDFLY_VERSION}-template-${FEATURE_PACK_VERSION}"
-          echo "::set-env name=BUILD_SERVER_DIR::${SRV_DIR}"
+          echo "BUILD_SERVER_DIR=${SRV_DIR}" >> $GITHUB_ENV
           MODULES_BASE="${SRV_DIR}/modules/system/layers/base"
-          echo "::set-env name=UNDERTOW_MODULE_XML::${MODULES_BASE}/org/wildfly/extension/undertow/main/module.xml"
-          echo "::set-env name=CONTROLLER_MODULE_XML::${MODULES_BASE}/org/jboss/as/controller/main/module.xml"
+          echo "UNDERTOW_MODULE_XML=${MODULES_BASE}/org/wildfly/extension/undertow/main/module.xml" >> $GITHUB_ENV
+          echo "CONTROLLER_MODULE_XML=${MODULES_BASE}/org/jboss/as/controller/main/module.xml" >> $GITHUB_ENV
 
       - name: Check versions
         run: |

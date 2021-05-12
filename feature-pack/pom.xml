@@ -39,6 +39,20 @@
         <finalName>${server.name}</finalName>
         <plugins>
             <plugin>
+                <!-- Feature pack generation is vulnerable to leftover files in the target
+                     folder from previous builds, so always clean even if the clean lifecycle is not invoked -->
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
@@ -69,7 +83,7 @@
                         <goals>
                             <goal>build-feature-pack</goal>
                         </goals>
-                        <phase>compile</phase>
+                        <phase>prepare-package</phase>
                         <configuration>
                             <fork-embedded>${galleon.fork.embedded}</fork-embedded>
                         </configuration>
@@ -107,9 +121,14 @@
             <type>zip</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.wildfly.galleon-plugins</groupId>
+            <artifactId>wildfly-galleon-plugins</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
 
-        <!-- Project modules -->
+        <!-- module and copy artifact dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>template-dependency</artifactId>
@@ -120,11 +139,16 @@
             <artifactId>template-subsystem</artifactId>
             <scope>provided</scope>
         </dependency>
+<!--
 
-
-
-        <!-- Normal dependencies -->
-
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-feature-pack-galleon-content</artifactId>
+            <version>${version.org.wildfly}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+-->
 
     </dependencies>
 </project>

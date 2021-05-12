@@ -40,12 +40,12 @@
         <!--
             Target WildFly version, and other parts needed for the Galleon maven plugin
         -->
-        <version.org.wildfly>20.0.0.Final</version.org.wildfly>
+        <version.org.wildfly>23.0.2.Final</version.org.wildfly>
         <!--
             The value of version.org.wildfly.core from the WildFly version tag. E.g. for 20.0.0.Final it is
             found here: https://github.com/wildfly/wildfly/blob/20.0.0.Final/pom.xml#L445
         -->
-        <version.org.wildfly.core>12.0.1.Final</version.org.wildfly.core>
+        <version.org.wildfly.core>15.0.1.Final</version.org.wildfly.core>
         <!--
             The value of version.org.wildfly.common from the WildFly Core version tag. E.g. for 12.0.1.Final it is
             found here: https://github.com/wildfly/wildfly-core/blob/12.0.1.Final/pom.xml#L217
@@ -56,13 +56,13 @@
 
 
         <!-- Other dependency versions -->
-        <version.org.jboss.arquillian.junit>1.4.0.Final</version.org.jboss.arquillian.junit>
-        <version.org.jboss.galleon>4.2.3.Final</version.org.jboss.galleon>
+        <version.org.jboss.arquillian.junit>1.6.0.Final</version.org.jboss.arquillian.junit>
+        <version.org.jboss.galleon>4.2.8.Final</version.org.jboss.galleon>
 
 
         <!-- Plugin versions and their dependency versions -->
         <version.org.wildfly.checkstyle-config>1.0.8.Final</version.org.wildfly.checkstyle-config>
-        <version.org.wildfly.galleon-plugins>4.2.3.Final</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.galleon-plugins>4.2.8.Final</version.org.wildfly.galleon-plugins>
 
         <!-- Misc. -->
         <wildfly-extras.repo.scm.connection>git@github.com:wildfly-extras/wildfly-galleon-pack-template.git</wildfly-extras.repo.scm.connection>
@@ -129,10 +129,17 @@
             <!-- WildFly dependencies -->
             <dependency>
                 <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <version>${version.org.wildfly}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly</groupId>
                 <artifactId>wildfly-galleon-pack</artifactId>
                 <version>${version.org.wildfly}</version>
                 <type>zip</type>
             </dependency>
+
             <!-- This BOM makes most of the dependencies from WildFly available for normal (non-plugin use -->
             <dependency>
                 <groupId>org.wildfly</groupId>

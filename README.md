@@ -15,6 +15,7 @@ is a tag for the relevant WildFly version:
 * [WildFly 18](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-18)
 * [WildFly 19](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-19)
 * [WildFly 20](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-20)
+* [WildFly 23](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-23)
 
 ## Building the Galleon feature pack
 
@@ -117,9 +118,9 @@ So in this case it will e.g. bring in the `org.wildfly.template-dependency` modu
 too. 
 
 It also configures the feature packs that we depend upon. Note
-that we have a direct dependency on `org.wildfly:wildfly-galleon-pack`. This in turn has dependencies on 
-`org.wildfly:wildfly-servlet-galleon-pack`, `org.wildfly:wildfly-ee-galleon-pack` and `org.wildfly.core:wildfly-core-galleon-pack` which is why the first 
-is listed under `dependencies` and the others under `transitive`. For each feature pack we can configure further
+that we have a direct dependency on `org.wildfly:wildfly-galleon-pack`. This in turn has a dependency on
+`org.wildfly:wildfly-ee-galleon-pack` which is why the first 
+is listed under `dependencies` and the other under `transitive`. For each feature pack we can configure further
 what we want to include. 
 
 [`feature-pack/pom.xml`](feature-pack/pom.xml)
@@ -207,7 +208,7 @@ to the more common way of downloading and extracting the zip from the
 
 You first need to [download Galleon](https://github.com/wildfly/galleon/releases)
 and unzip it somewhere. In my case I just have it in my `~/Downloads` folder, and I am using 
-Galleon 4.2.5.
+Galleon 4.2.8.
 
 As we will see below there are two main ways to use Gallon CLI to provision servers. We can either
 run commands directly in Galleon CLI directly, or we can provide an XML file which contains all the
@@ -223,12 +224,12 @@ This consists of two steps.
 First we run the CLI to install the full WildFly server (the result will be the same as the downloaded
 zip):
 ```
-~/Downloads/galleon-4.2.5.Final/bin/galleon.sh install wildfly:current --dir=wildfly
+~/Downloads/galleon-4.2.8.Final/bin/galleon.sh install wildfly:current --dir=wildfly
 ```
 The `wildfly:current` above tells Galleon to provision the latest version of WildFly which
 at the time of writing is 20.0.0.Final. If you want to install a particular version of 
 WildFly, you can append the version, e.g:
-* `wildfly:current#21.0.0.Beta1-SNAPSHOT` - installs WildFly from locally build maven artifacts 
+* `wildfly:current#24.0.0.Beta1-SNAPSHOT` - installs WildFly from locally build maven artifacts 
 
 `--dir` specifies the directory to install the server into. In this case I am using 
 a relative directory called `wildfly`.
@@ -237,7 +238,7 @@ If you want to trim the base server that we install (similar to what we did in t
 example server build), you can specify which layers to install by passing in the `--layers`
 option. To install the same server as we used to run the example above, you can run:
 ```
-~/Downloads/galleon-4.2.5.Final/bin/galleon.sh install wildfly:current --dir=wildfly --layers=jaxrs,management
+~/Downloads/galleon-4.2.8.Final/bin/galleon.sh install wildfly:current --dir=wildfly --layers=jaxrs,management
 ```
 Note that we did not install our `template-layer` because this is unknown in the main
 WildFly feature pack. We will add it in the next step.
@@ -245,7 +246,7 @@ WildFly feature pack. We will add it in the next step.
 #### Install our layer
 Next we want to install our layer. We do this by running:
 ```
-~/Downloads/galleon-4.2.5.Final/bin/galleon.sh install org.wildfly.extras.wildfly-feature-pack-template:template-feature-pack:1.0.0.Alpha-SNAPSHOT --layers=template-layer --dir=wildfly
+~/Downloads/galleon-4.2.8.Final/bin/galleon.sh install org.wildfly.extras.wildfly-feature-pack-template:template-feature-pack:1.0.0.Alpha-SNAPSHOT --layers=template-layer --dir=wildfly
 ``` 
 `org.wildfly.extras.wildfly-feature-pack-template:template-feature-pack:1.0.0.Alpha-SNAPSHOT`
 is the Maven GAV of the Galleon feature pack (i.e. what we have in 
@@ -296,10 +297,10 @@ There is a list of all our layers defined by WildFly and WildFly Core in our
 
 However, if you want to understand better what their dependencies are, you can look at the 
 layer-spec.xml for the various layers in the following locations:
-* WildFly Core's [Core Feature Pack](https://github.com/wildfly/wildfly-core/tree/12.0.1.Final/core-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [Servlet Feature Pack](https://github.com/wildfly/wildfly/tree/20.0.0.Final/servlet-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [EE Feature Pack](https://github.com/wildfly/wildfly/tree/20.0.0.Final/ee-galleon-pack/src/main/resources/layers/standalone)
-* WildFly's [Full Feature Pack](https://github.com/wildfly/wildfly/tree/20.0.0.Final/galleon-pack/src/main/resources/layers/standalone)
+* WildFly Core's [Core Feature Pack](https://github.com/wildfly/wildfly-core/tree/15.0.1.Final/core-feature-pack/galleon-common/src/main/resources/layers/standalone)
+* WildFly's [Servlet Feature Pack](https://github.com/wildfly/wildfly/tree/23.0.0.Final/servlet-feature-pack/galleon-common/src/main/resources/layers/standalone)
+* WildFly's [EE Feature Pack](https://github.com/wildfly/wildfly/tree/23.0.0.Final/ee-feature-pack/galleon-common/src/main/resources/layers/standalone)
+* WildFly's [MicroProfile Feature Pack](https://github.com/wildfly/wildfly/tree/23.0.0.Final/microprofile/galleon-common/src/main/resources/layers/standalone)
 
 Note that the above links takes you to the versions used for WildFly 20.0.0.Final. If you
 are interested in another/newer WildFly version, adjust the tag name in the URL.
@@ -310,4 +311,4 @@ good to run `mvn install -X` which will provide more logging.
 
 If the above doesn't shed any light on your problems, it can also be good to look at the 
 `feature-pack/target/layout/org.wildfly.extras.wildfly-feature-pack-template/template-feature-pack/<version>/`
-directory to see if everything you expected there.
+directory to see if everything you expect is there.
