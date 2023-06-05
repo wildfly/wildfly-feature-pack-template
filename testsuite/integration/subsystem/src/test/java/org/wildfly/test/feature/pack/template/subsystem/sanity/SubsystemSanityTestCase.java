@@ -16,12 +16,11 @@
 
 package org.wildfly.test.feature.pack.template.subsystem.sanity;
 
-import javax.inject.Inject;
-
+import jakarta.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,10 +40,9 @@ public class SubsystemSanityTestCase {
 
     @Deployment
     public static WebArchive getDeployment() {
-        final WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "sanity-test.war")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+        return ShrinkWrap.create(WebArchive.class, "sanity-test.war")
+                .addAsWebInfResource(new StringAsset("<beans bean-discovery-mode=\"all\"></beans>"), "beans.xml")
                 .addPackage(SubsystemSanityTestCase.class.getPackage());
-        return webArchive;
     }
 
     @Test
@@ -54,4 +52,3 @@ public class SubsystemSanityTestCase {
         Assert.assertEquals("Welcome! (English)", greeting.getMessage());
     }
 }
-

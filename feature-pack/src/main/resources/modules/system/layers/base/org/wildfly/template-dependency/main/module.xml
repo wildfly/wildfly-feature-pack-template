@@ -26,7 +26,7 @@
 
     <dependencies>
         <!-- We need these dependencies to trigger weld/CDI -->
-        <module name="javax.enterprise.api"/>
+        <module name="jakarta.enterprise.api"/>
         <module name="org.jboss.weld.api"/>
         <module name="org.jboss.weld.core"/>
         <module name="org.jboss.weld.spi"/>
