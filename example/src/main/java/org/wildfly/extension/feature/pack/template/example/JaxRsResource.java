@@ -1,9 +1,9 @@
 package org.wildfly.extension.feature.pack.template.example;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
 
 import org.wildfly.feature.pack.template.dependency.ExampleQualifier;
 import org.wildfly.feature.pack.template.dependency.Message;

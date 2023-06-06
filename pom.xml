@@ -19,8 +19,9 @@
     <parent>
         <groupId>org.jboss</groupId>
         <artifactId>jboss-parent</artifactId>
-        <version>35</version>
+        <version>39</version>
     </parent>
+
     <groupId>org.wildfly.extras.wildfly-feature-pack-template</groupId>
     <artifactId>template-parent</artifactId>
     <version>1.0.0.Alpha-SNAPSHOT</version>
@@ -32,7 +33,7 @@
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.html</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -40,29 +41,29 @@
         <!--
             Target WildFly version, and other parts needed for the Galleon maven plugin
         -->
-        <version.org.wildfly>23.0.2.Final</version.org.wildfly>
+        <version.org.wildfly>28.0.1.Final</version.org.wildfly>
         <!--
             The value of version.org.wildfly.core from the WildFly version tag. E.g. for 20.0.0.Final it is
             found here: https://github.com/wildfly/wildfly/blob/20.0.0.Final/pom.xml#L445
         -->
-        <version.org.wildfly.core>15.0.1.Final</version.org.wildfly.core>
+        <version.org.wildfly.core>20.0.2.Final</version.org.wildfly.core>
         <!--
             The value of version.org.wildfly.common from the WildFly Core version tag. E.g. for 12.0.1.Final it is
             found here: https://github.com/wildfly/wildfly-core/blob/12.0.1.Final/pom.xml#L217
         -->
-        <version.org.wildfly.common>1.5.4.Final</version.org.wildfly.common>
+        <version.org.wildfly.common>1.6.0.Final</version.org.wildfly.common>
 
 
 
 
         <!-- Other dependency versions -->
-        <version.org.jboss.arquillian.junit>1.6.0.Final</version.org.jboss.arquillian.junit>
-        <version.org.jboss.galleon>4.2.8.Final</version.org.jboss.galleon>
+        <version.org.jboss.arquillian.junit>1.7.0.Final</version.org.jboss.arquillian.junit>
+        <version.org.jboss.galleon>5.1.0.Final</version.org.jboss.galleon>
 
 
         <!-- Plugin versions and their dependency versions -->
         <version.org.wildfly.checkstyle-config>1.0.8.Final</version.org.wildfly.checkstyle-config>
-        <version.org.wildfly.galleon-plugins>4.2.8.Final</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.galleon-plugins>6.4.2.Final</version.org.wildfly.galleon-plugins>
 
         <!-- Misc. -->
         <wildfly-extras.repo.scm.connection>git@github.com:wildfly-extras/wildfly-galleon-pack-template.git</wildfly-extras.repo.scm.connection>
@@ -92,7 +93,7 @@
         <linkXRef>false</linkXRef>
 
         <!-- WildFLy plugin version. We use it to be able to run wildfly:deploy for the example -->
-        <version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>2.3.1.Final</version.wildfly.maven.plugin>
     </properties>
     <repositories>
         <repository>
@@ -140,16 +141,22 @@
                 <type>zip</type>
             </dependency>
 
-            <!-- This BOM makes most of the dependencies from WildFly available for normal (non-plugin use -->
+            <!-- This BOM makes most of the dependencies from WildFly available for normal (non-plugin use) -->
             <dependency>
                 <groupId>org.wildfly</groupId>
-                <artifactId>wildfly-component-matrix</artifactId>
+                <artifactId>wildfly-standard-ee-bom</artifactId>
                 <version>${version.org.wildfly}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-standard-test-bom</artifactId>
+                <version>${version.org.wildfly}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- Project -->
             <dependency>
@@ -163,6 +170,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>template-subsystem</artifactId>
@@ -174,6 +182,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>template-feature-pack</artifactId>
@@ -186,6 +195,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>template-feature-pack</artifactId>
@@ -199,8 +209,6 @@
                 </exclusions>
             </dependency>
 
-
-
             <!-- External dependencies -->
             <!-- This does not go into the modules so don't worry about exclusions -->
             <dependency>
@@ -208,8 +216,6 @@
                 <artifactId>wildfly-checkstyle-config</artifactId>
                 <version>${version.org.wildfly.checkstyle-config}</version>
             </dependency>
-
-
 
             <!-- Test dependencies -->
             <dependency>
@@ -220,6 +226,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
