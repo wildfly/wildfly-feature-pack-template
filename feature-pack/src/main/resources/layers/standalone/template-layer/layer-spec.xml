@@ -18,7 +18,7 @@
     TODO Replace 'template-layer' in both 'name' and the name of the directory
     with the name of your layer
 -->
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="template-layer">
+<layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="template-layer">
     <dependencies>
         <layer name="cdi"/>
     </dependencies>

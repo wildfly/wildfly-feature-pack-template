@@ -41,29 +41,29 @@
         <!--
             Target WildFly version, and other parts needed for the Galleon maven plugin
         -->
-        <version.org.wildfly>28.0.1.Final</version.org.wildfly>
+        <version.org.wildfly>31.0.0.Final</version.org.wildfly>
         <!--
             The value of version.org.wildfly.core from the WildFly version tag. E.g. for 20.0.0.Final it is
             found here: https://github.com/wildfly/wildfly/blob/20.0.0.Final/pom.xml#L445
         -->
-        <version.org.wildfly.core>20.0.2.Final</version.org.wildfly.core>
+        <version.org.wildfly.core>23.0.1.Final</version.org.wildfly.core>
         <!--
             The value of version.org.wildfly.common from the WildFly Core version tag. E.g. for 12.0.1.Final it is
             found here: https://github.com/wildfly/wildfly-core/blob/12.0.1.Final/pom.xml#L217
         -->
-        <version.org.wildfly.common>1.6.0.Final</version.org.wildfly.common>
+        <version.org.wildfly.common>1.7.0.Final</version.org.wildfly.common>
 
 
 
 
         <!-- Other dependency versions -->
-        <version.org.jboss.arquillian.junit>1.7.0.Final</version.org.jboss.arquillian.junit>
-        <version.org.jboss.galleon>5.1.0.Final</version.org.jboss.galleon>
+        <version.org.jboss.arquillian.junit>1.7.2.Final</version.org.jboss.arquillian.junit>
+        <version.org.jboss.galleon>5.2.2.Final</version.org.jboss.galleon>
 
 
         <!-- Plugin versions and their dependency versions -->
         <version.org.wildfly.checkstyle-config>1.0.8.Final</version.org.wildfly.checkstyle-config>
-        <version.org.wildfly.galleon-plugins>6.4.2.Final</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.galleon-plugins>6.5.4.Final</version.org.wildfly.galleon-plugins>
 
         <!-- Misc. -->
         <wildfly-extras.repo.scm.connection>git@github.com:wildfly-extras/wildfly-galleon-pack-template.git</wildfly-extras.repo.scm.connection>
@@ -93,7 +93,7 @@
         <linkXRef>false</linkXRef>
 
         <!-- WildFLy plugin version. We use it to be able to run wildfly:deploy for the example -->
-        <version.wildfly.maven.plugin>2.3.1.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>4.2.1.Final</version.wildfly.maven.plugin>
     </properties>
     <repositories>
         <repository>

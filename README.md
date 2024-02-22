@@ -16,6 +16,8 @@ is a tag for the relevant WildFly version:
 * [WildFly 19](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-19)
 * [WildFly 20](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-20)
 * [WildFly 23](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-23)
+* [WildFly 28](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-28)
+* [WildFly 31](https://github.com/wildfly/wildfly-feature-pack-template/tree/wildfly-31)
 
 ## Building the Galleon feature pack
 
